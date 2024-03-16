@@ -17,7 +17,13 @@ Output:
 
 ## String format
 
-Input should be comma delimited list of integers, negative numbers are valid. Invalid, empty, or missing numbers default to `0`.
+- Input should be comma delimited list of integers, negative numbers are valid.
+	- Can optionally use newline character `\n` as a delimiter.
+	- On my MacOS system, run it using this syntax:
+	```bash
+	$ python3 app.py $'1\n2,3'
+	```
+- Invalid, empty, or missing numbers default to `0`.
 
 
 ## Tests

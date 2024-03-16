@@ -3,8 +3,15 @@ class Calculator:
 	Calculates the sum of the given list of integers. See readme for input format.
 	'''
 	def __init__(self, numListStr):
-		self.numList = numListStr.split(',')
+		self.numList = self._parseNumListStr(numListStr)
 		self._validateNumList()
+
+
+	def _parseNumListStr(self, numListStr):
+		# Replace newline chars with commas
+		newStr = numListStr.replace('\n', ',')
+		# Split on commas
+		return newStr.split(',')
 
 
 	def _validateNumList(self):

@@ -51,6 +51,21 @@ class TestCalculator(unittest.TestCase):
 		result = c.calculate()
 		self.assertEqual(result, 0)
 
+	def testNewLineDelimiters(self):
+		c = Calculator('1\n2\n3')
+		result = c.calculate()
+		self.assertEqual(result, 6)
+
+	def testMixedDelimiters(self):
+		c = Calculator('1\n2,3')
+		result = c.calculate()
+		self.assertEqual(result, 6)
+
+	def testMixedEmptyDelimetersWithTrailingValue(self):
+		c = Calculator(',,\n\n,\n1')
+		result = c.calculate()
+		self.assertEqual(result, 1)
+
 
 if __name__ == '__main__':
 	unittest.main()
