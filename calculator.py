@@ -27,10 +27,13 @@ class Calculator:
 
 	def _getNumVal(self, num):
 		'''
-		Returns value of num as int, or 0 if num cannot be casted to an int.
+		Returns value of num as int. Returns 0 if num is > 1000 or it cannot be 
+		casted to an int.
 		'''
 		try:
 			val = int(num)
+			if val > 1000:
+				val = 0
 		except Exception as e:
 			val = 0
 		return val
