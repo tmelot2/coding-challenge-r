@@ -65,17 +65,30 @@ class TestCalculator(unittest.TestCase):
 	def testIgnoreInvalidLargeNumbers(self):
 		c = Calculator('1,2,1001')
 		result = c.calculate()
-		self.assertEqual(result, 3)	
+		self.assertEqual(result, 3)
 
 	def test1000NotIgnored(self):
 		c = Calculator('1,2,1000')
 		result = c.calculate()
-		self.assertEqual(result, 1003)	
+		self.assertEqual(result, 1003)
 
 	def testValidMixedNonsense(self):
 		c = Calculator('a,b,,\n\n1,9999\n2\n\na')
 		result = c.calculate()
-		self.assertEqual(result, 3)	
+		self.assertEqual(result, 3)
+
+	def testCustomDelimiter(self):
+		c = Calculator('//#\n2#5')
+		result = c.calculate()
+		self.assertEqual(result, 7)
+
+		c = Calculator('//,\n2,ff,100')
+		result = c.calculate()
+		self.assertEqual(result, 102)
+
+	def testErrorOnTooLongCustomDelimiter(self):
+		with self.assertRaises(Exception):
+			c = Calculator('//##\n2#5')
 
 if __name__ == '__main__':
 	unittest.main()

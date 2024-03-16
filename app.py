@@ -20,6 +20,7 @@ def validateInputArgs(args):
 
 def printUsage():
 	print('\nExample usage: $ python3 challenge-calculator.py 1,2')
+	print('See readme.md for full format description')
 
 
 ## Main

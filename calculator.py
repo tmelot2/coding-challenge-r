@@ -1,15 +1,51 @@
 class Calculator:
 	'''
-	Calculates the sum of the given list of integers. See readme for input format.
+	Calculates the sum of the given list of integers. See 'Input Format' in
+	readme for full description.
 	'''
+
 	def __init__(self, numListStr):
+		self._validateCustomDelimiter(numListStr)
 		self.numList = self._parseNumListStr(numListStr)
 		self._validateNoNegativeNumbers()
 
 
+	def _validateCustomDelimiter(self, numListStr):
+		'''
+		Validates that input optional custom delimiter is 1 character only,
+		raises error if > 1.
+
+		NOTE-1: Format is: //{delimiter}\n{numbers}
+		'''
+		if numListStr[0:2] == '//':
+			if numListStr[2] != '\n' and numListStr[3] == '\n':
+				pass
+			else:
+				raise Exception('Custom delimiter cannot be > 1 character')
+
+
 	def _parseNumListStr(self, numListStr):
-		# Replace newline chars with commas
+		'''
+		Returns the input str as a list of ints.
+
+		It replaces all valid delimiters with commas, then splits the str into
+		a list & returns that.
+
+		Assumes a valid input str (call _validateCustomDelimiter() first).
+		'''
+
+		# Parse optional custom delimiter, see NOTE-1 above for format
+		newDelim = ''
+		if numListStr[0:2] == '//' and numListStr[3] == '\n':
+			newDelim = numListStr[2]
+			# Trim out custom delimiter syntax
+			numListStr = numListStr[4:]
+
+		# Replace newline & optional custom delims with commas
 		newStr = numListStr.replace('\n', ',')
+		if newDelim != '':
+			newStr = numListStr.replace(newDelim, ',')
+
 		# Split on commas
 		return newStr.split(',')
 
@@ -40,6 +76,10 @@ class Calculator:
 
 
 	def calculate(self):
+		'''
+		Loops over the number list, accumulates each one into a sum, & returns
+		result.
+		'''
 		sum = 0
 		for i,num in enumerate(self.numList):
 			numVal = self._getNumVal(num)

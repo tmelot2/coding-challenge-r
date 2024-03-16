@@ -2,6 +2,8 @@
 
 A command line calculator that supports add operations. Requires Python 3.
 
+Developed & tested with Python 3.11.7.
+
 ## How to use
 
 Run with Python & provide an input string. Example:
@@ -15,11 +17,12 @@ Output:
 6
 ```
 
-## String format
+## Input Format
 
 - Input should be comma delimited list of positive integers, negative numbers are invalid.
 	- Can optionally use newline character `\n` as a delimiter.
-	- On my MacOS system, run it using this syntax:
+	- Can optionally use a 1-character custom delimiter. Format: `//{delimiter}\n{numbers}`
+	- On MacOS, use newlines with this syntax:
 	```bash
 	$ python3 app.py $'1\n2,3'
 	```
