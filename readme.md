@@ -22,7 +22,7 @@ Output:
 - Input should be comma delimited list of positive integers, negative numbers will cause an error.
 	- Can optionally use newline character `\n` as a delimiter.
 	- Can optionally use a 1-character custom delimiter. Format: `//{delimiter}\n{numbers}`
-	- On MacOS, use newlines with this syntax:
+	- On my computer running MacOS Ventura, zsh is the shell. Use newlines with this syntax:
 	```bash
 	$ python3 app.py $'1\n2,3'
 	```
