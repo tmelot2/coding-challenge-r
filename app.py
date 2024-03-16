@@ -19,7 +19,7 @@ def validateInputArgs(args):
 	return (True if len(args) >= 2 else False)
 
 def printUsage():
-	print('Example usage: $ python3 challenge-calculator.py 1,2')
+	print('\nExample usage: $ python3 challenge-calculator.py 1,2')
 
 
 ## Main

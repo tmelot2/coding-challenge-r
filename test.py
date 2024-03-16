@@ -8,16 +8,6 @@ class TestCalculator(unittest.TestCase):
 		result = c.calculate()
 		self.assertEqual(result, 256)
 
-	def testAddTwoNegative(self):
-		c = Calculator('-2,-1')
-		result = c.calculate()
-		self.assertEqual(result, -3)
-
-	def testAddOnePositiveOneNegative(self):
-		c = Calculator('4,-3')
-		result = c.calculate()
-		self.assertEqual(result, 1)
-
 	def testOneNumber(self):
 		c = Calculator('2')
 		result = c.calculate()
@@ -66,6 +56,11 @@ class TestCalculator(unittest.TestCase):
 		result = c.calculate()
 		self.assertEqual(result, 1)
 
+	def testErrorOnNegative(self):
+		message = ''
+		with self.assertRaises(Exception) as e:
+			c = Calculator('1,-1,2,-2,3,-3')
+		self.assertEqual('Cannot use negative numbers, found these: -1,-2,-3', str(e.exception))
 
 if __name__ == '__main__':
 	unittest.main()

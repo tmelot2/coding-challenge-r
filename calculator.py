@@ -4,7 +4,7 @@ class Calculator:
 	'''
 	def __init__(self, numListStr):
 		self.numList = self._parseNumListStr(numListStr)
-		self._validateNumList()
+		self._validateNoNegativeNumbers()
 
 
 	def _parseNumListStr(self, numListStr):
@@ -14,20 +14,31 @@ class Calculator:
 		return newStr.split(',')
 
 
-	def _validateNumList(self):
-		# There was previously a validation for a max of 2 numbers. That's no
-		# longer the case. Leaving this here because we'll probably need it in
-		# the future. 
-		pass
+	def _validateNoNegativeNumbers(self):
+		negatives = []
+		for num in self.numList:
+			val = self._getNumVal(num)
+			if val < 0:
+				negatives.append(num)
+		if len(negatives):
+			negListStr = ','.join(negatives)
+			raise Exception(f'Cannot use negative numbers, found these: {negListStr}')
+
+
+	def _getNumVal(self, num):
+		'''
+		Returns value of num as int, or 0 if num cannot be casted to an int.
+		'''
+		try:
+			val = int(num)
+		except Exception as e:
+			val = 0
+		return val
 
 
 	def calculate(self):
 		sum = 0
-		for i,n in enumerate(self.numList):
-			try:
-				numVal = int(n)
-			except Exception as e:
-				numVal = 0
-
+		for i,num in enumerate(self.numList):
+			numVal = self._getNumVal(num)
 			sum += numVal
 		return sum

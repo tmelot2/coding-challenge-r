@@ -17,7 +17,7 @@ Output:
 
 ## String format
 
-- Input should be comma delimited list of integers, negative numbers are valid.
+- Input should be comma delimited list of positive integers, negative numbers are invalid.
 	- Can optionally use newline character `\n` as a delimiter.
 	- On my MacOS system, run it using this syntax:
 	```bash
