@@ -7,17 +7,17 @@ A command line calculator that supports add operations. Requires Python 3.
 Run with Python & provide an input string. Example:
 
 ```bash
-$ python3 app.py 1,2
+$ python3 app.py 1,2,3
 ```
 
 Output:
 ```bash
-3
+6
 ```
 
 ## String format
 
-Supports max of 2 input integers, comma delimited, negative numbers are valid. Invalid, empty, or missing numbers default to `0`.
+Input should be comma delimited list of integers, negative numbers are valid. Invalid, empty, or missing numbers default to `0`.
 
 
 ## Tests

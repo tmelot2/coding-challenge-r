@@ -25,7 +25,7 @@ def printUsage():
 ## Main
 #
 try:
-	# Validate input args
+	# Validate app input args
 	if not validateInputArgs(sys.argv):
 		raise Exception(f'Missing input arg for number list.')
 

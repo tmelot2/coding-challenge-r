@@ -8,8 +8,10 @@ class Calculator:
 
 
 	def _validateNumList(self):
-		if len(self.numList) > 2:
-			raise Exception('Too many numbers in list (max of 2).')
+		# There was previously a validation for a max of 2 numbers. That's no
+		# longer the case. Leaving this here because we'll probably need it in
+		# the future. 
+		pass
 
 
 	def calculate(self):
