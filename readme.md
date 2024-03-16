@@ -19,7 +19,7 @@ Output:
 
 ## Input Format
 
-- Input should be comma delimited list of positive integers, negative numbers are invalid.
+- Input should be comma delimited list of positive integers, negative numbers will cause an error.
 	- Can optionally use newline character `\n` as a delimiter.
 	- Can optionally use a 1-character custom delimiter. Format: `//{delimiter}\n{numbers}`
 	- On MacOS, use newlines with this syntax:
