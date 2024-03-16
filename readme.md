@@ -26,7 +26,7 @@ Output:
 	```bash
 	$ python3 app.py $'1\n2,3'
 	```
-- Invalid, empty, or missing numbers default to `0`.
+- Invalid or empty numbers default to `0`.
 
 
 ## Tests
