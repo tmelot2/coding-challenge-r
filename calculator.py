@@ -33,21 +33,23 @@ class Calculator:
 
 		Assumes a valid input str (call _validateCustomDelimiter() first).
 		'''
+		# Do this so we aren't editing the input arg
+		newListStr = numListStr
 
 		# Parse optional custom delimiter, see NOTE-1 above for format
 		newDelim = ''
-		if numListStr[0:2] == '//' and numListStr[3] == '\n':
-			newDelim = numListStr[2]
+		if newListStr[0:2] == '//' and newListStr[3] == '\n':
+			newDelim = newListStr[2]
 			# Trim out custom delimiter syntax
-			numListStr = numListStr[4:]
+			newListStr = newListStr[4:]
 
 		# Replace newline & optional custom delims with commas
-		newStr = numListStr.replace('\n', ',')
+		newListStr = newListStr.replace('\n', ',')
 		if newDelim != '':
-			newStr = numListStr.replace(newDelim, ',')
+			newListStr = newListStr.replace(newDelim, ',')
 
 		# Split on commas
-		return newStr.split(',')
+		return newListStr.split(',')
 
 
 	def _validateNoNegativeNumbers(self):
