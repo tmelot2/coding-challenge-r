@@ -1,9 +1,19 @@
+import re
+
 class Calculator:
 	'''
 	Calculates the sum of the given list of integers. See 'Input Format' in
 	readme for full description.
 
-	Design notes
+	Formats:
+		- No custom delim:             {numbers}
+		- Custom 1-character delim:    //{delim}\n{numbers}
+		- Custom many-character delim: //[{delim}]\n{numbers}
+
+	{numbers} is comma-separated list of ints. Newline & custom delimiters are
+	also valid.
+
+	Design Notes
 
 	Goal was to keep the calculation logic very simple. To do this, the class
 	validates & preprocesses the input str on init, turning it into a simple
@@ -14,25 +24,31 @@ class Calculator:
 	preprocessing with as few loops over the data as possible, doing as much work
 	as possible each iteration.
 	'''
+	CUSTOM_DELIM_PATTERN = r'//(.*?)\n(.*?)'
 
 	def __init__(self, numListStr):
-		self._validateCustomDelimiter(numListStr)
 		self.numList = self._parseNumListStr(numListStr)
 		self._validateNoNegativeNumbers()
 
 
 	def _validateCustomDelimiter(self, numListStr):
 		'''
-		Validates that input optional custom delimiter is 1 character only,
-		raises error if > 1.
-
-		NOTE-1: Format is: //{delimiter}\n{numbers}
+		Validates format for custom delimiters, raises error on invalid.
 		'''
 		if numListStr[0:2] == '//':
-			if numListStr[2] != '\n' and numListStr[3] == '\n':
+			match = re.findall(self.CUSTOM_DELIM_PATTERN, numListStr)
+			customDelim = match[0][0] # 1st match in list, 1st capture group in tuple
+
+			# Multi-character delim
+			if customDelim[0] == '[' and customDelim[-1] == ']':
+				# All good, nothing else to validate
 				pass
+			# 1-character delim
+			elif customDelim[0] != '[' and customDelim[-1] != ']':
+				if len(customDelim) > 1:
+					raise Exception('The format used only supports 1-character delimiters. Wrap in [] for multi-character delimiters.')
 			else:
-				raise Exception('Custom delimiter cannot be > 1 character')
+				raise Exception('Invalid custom delimiter pattern, see readme for format')
 
 
 	def _parseNumListStr(self, numListStr):
@@ -41,23 +57,26 @@ class Calculator:
 
 		It replaces all valid delimiters with commas, then splits the str into
 		a list & returns that.
-
-		NOTE: Assumes a valid input str, call _validateCustomDelimiter() first!
 		'''
-		# Do this so we aren't editing the input arg
-		newListStr = numListStr
+		# Local copy so we aren't editing the input arg
+		newListStr = str(numListStr)
 
-		# Parse optional custom delimiter, see NOTE-1 above for format
-		newDelim = ''
-		if newListStr[0:2] == '//' and newListStr[3] == '\n':
-			newDelim = newListStr[2]
-			# Trim out custom delimiter syntax
-			newListStr = newListStr[4:]
+		# Validate custom delimiter format
+		self._validateCustomDelimiter(newListStr)
+
+		# Parse optional custom delimiter
+		customDelim = ''
+		if newListStr[0:2] == '//':
+			match = re.findall(self.CUSTOM_DELIM_PATTERN, newListStr)
+			customDelim = match[0][0] # 1st match in list, 1st capture group in tuple
+			# Strip []
+			if customDelim[0] == '[':
+				customDelim = customDelim[1:-1]
 
 		# Replace newline & optional custom delims with commas
 		newListStr = newListStr.replace('\n', ',')
-		if newDelim != '':
-			newListStr = newListStr.replace(newDelim, ',')
+		if customDelim != '':
+			newListStr = newListStr.replace(customDelim, ',')
 
 		# Split on commas
 		return newListStr.split(',')

@@ -2,6 +2,7 @@ import unittest
 
 from calculator import Calculator
 
+
 class TestCalculator(unittest.TestCase):
 	def testAddTwoPositive(self):
 		c = Calculator('250,6')
@@ -95,6 +96,23 @@ class TestCalculator(unittest.TestCase):
 		with self.assertRaises(Exception) as e:
 			c = Calculator('//_\n1_-1,2_-2\n,3_-3')
 		self.assertEqual('Cannot use negative numbers, found these: -1,-2,-3', str(e.exception))
+
+	def testMultiCharCustomDelimiter(self):
+		c = Calculator('//[***]\n11***22***33')
+		result = c.calculate()
+		self.assertEqual(result, 66)
+
+	def testErrorOnInvalidMultiCharCustomDelimiter(self):
+		message = ''
+		with self.assertRaises(Exception) as e:
+			c = Calculator('//[###\n2###5')
+		self.assertEqual('Invalid custom delimiter pattern, see readme for format', str(e.exception))
+
+	def testEmptyWithMultiDelimiter(self):
+		c = Calculator('//[###]\n\n\n')
+		result = c.calculate()
+		self.assertEqual(result, 0)
+
 
 if __name__ == '__main__':
 	unittest.main()
