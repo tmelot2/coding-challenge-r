@@ -9,6 +9,7 @@ class Calculator:
 		- No custom delim:             {numbers}
 		- Custom 1-character delim:    //{delim}\n{numbers}
 		- Custom many-character delim: //[{delim}]\n{numbers}
+		- Many custom delims: 		   //[{delim1}][{delim2}]\n{numbers}
 
 	{numbers} is comma-separated list of ints. Newline & custom delimiters are
 	also valid.
@@ -114,13 +115,20 @@ class Calculator:
 		return val
 
 
-	def calculate(self):
+	def calculate(self, displayFormula=False):
 		'''
 		Loops over the number list, accumulates each one into a sum, & returns
 		result.
 		'''
-		sum = 0
+		result = 0
+		vals = []
 		for i,num in enumerate(self.numList):
 			numVal = self._getNumVal(num)
-			sum += numVal
-		return sum
+			vals.append(str(numVal))
+			result += numVal
+
+		if displayFormula:
+			formulaStr = '+'.join(vals)
+			print(f'{formulaStr} = {result}')
+
+		return result

@@ -31,7 +31,7 @@ try:
 		raise Exception(f'Missing input arg for number list.')
 
 	c = Calculator(sys.argv[1])
-	result = c.calculate()
+	result = c.calculate(displayFormula=True)
 	print(result)
 except Exception as e:
 	if DEBUG: 
