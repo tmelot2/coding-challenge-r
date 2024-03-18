@@ -2,6 +2,17 @@ class Calculator:
 	'''
 	Calculates the sum of the given list of integers. See 'Input Format' in
 	readme for full description.
+
+	Design notes
+
+	Goal was to keep the calculation logic very simple. To do this, the class
+	validates & preprocesses the input str on init, turning it into a simple
+	list internally.
+
+	This works well for simplicity, but will likely be too slow if the input str
+	scales too large. In that case, a design I would explore is to replace the
+	preprocessing with as few loops over the data as possible, doing as much work
+	as possible each iteration.
 	'''
 
 	def __init__(self, numListStr):
@@ -31,7 +42,7 @@ class Calculator:
 		It replaces all valid delimiters with commas, then splits the str into
 		a list & returns that.
 
-		Assumes a valid input str (call _validateCustomDelimiter() first).
+		NOTE: Assumes a valid input str, call _validateCustomDelimiter() first!
 		'''
 		# Do this so we aren't editing the input arg
 		newListStr = numListStr
