@@ -108,8 +108,18 @@ class TestCalculator(unittest.TestCase):
 			c = Calculator('//[###\n2###5')
 		self.assertEqual('Invalid custom delimiter pattern, see readme for format', str(e.exception))
 
-	def testEmptyWithMultiDelimiter(self):
+	def testEmptyWithMultiCharDelimiter(self):
 		c = Calculator('//[###]\n\n\n')
+		result = c.calculate()
+		self.assertEqual(result, 0)
+
+	def testMultiDelimiters(self):
+		c = Calculator('//[*][!!][r9r]\n11r9r22*hh*33!!44')
+		result = c.calculate()
+		self.assertEqual(result, 110)
+
+	def testEmptyWithMultiDelimiters(self):
+		c = Calculator('//[###][___]\n\n\n')
 		result = c.calculate()
 		self.assertEqual(result, 0)
 

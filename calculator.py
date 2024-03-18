@@ -24,7 +24,7 @@ class Calculator:
 	preprocessing with as few loops over the data as possible, doing as much work
 	as possible each iteration.
 	'''
-	CUSTOM_DELIM_PATTERN = r'//(.*?)\n(.*?)'
+	CUSTOM_DELIM_PATTERN = r'^//(.*?)\n(.*?)'
 
 	def __init__(self, numListStr):
 		self.numList = self._parseNumListStr(numListStr)
@@ -37,9 +37,9 @@ class Calculator:
 		'''
 		if numListStr[0:2] == '//':
 			match = re.findall(self.CUSTOM_DELIM_PATTERN, numListStr)
-			customDelim = match[0][0] # 1st match in list, 1st capture group in tuple
+			customDelim = match[0][0] # 1st match in list, 1st item in tuple
 
-			# Multi-character delim
+			# Multi-delim & multi-character delim
 			if customDelim[0] == '[' and customDelim[-1] == ']':
 				# All good, nothing else to validate
 				pass
@@ -58,25 +58,32 @@ class Calculator:
 		It replaces all valid delimiters with commas, then splits the str into
 		a list & returns that.
 		'''
+
 		# Local copy so we aren't editing the input arg
 		newListStr = str(numListStr)
 
 		# Validate custom delimiter format
 		self._validateCustomDelimiter(newListStr)
 
-		# Parse optional custom delimiter
-		customDelim = ''
+		# Parse & replace optional custom delimiters
 		if newListStr[0:2] == '//':
-			match = re.findall(self.CUSTOM_DELIM_PATTERN, newListStr)
-			customDelim = match[0][0] # 1st match in list, 1st capture group in tuple
-			# Strip []
-			if customDelim[0] == '[':
-				customDelim = customDelim[1:-1]
+			# Get delimiter section
+			delimiterSection = re.findall(self.CUSTOM_DELIM_PATTERN, newListStr)
+			delim = delimiterSection[0][0] # 1st match in list, 1st item in tuple
 
-		# Replace newline & optional custom delims with commas
+			# Replace single or multi delimiters
+			multiDelimPattern = r'\[.*?\]+'
+			multiDelims = re.findall(multiDelimPattern, delim)
+			# Multi
+			if len(multiDelims):
+				for d in multiDelims:
+					newListStr = newListStr.replace(d[1:-1], ',')
+			# Single
+			else:
+				newListStr = newListStr.replace(delim, ',')
+
+		# Replace newlines with commas
 		newListStr = newListStr.replace('\n', ',')
-		if customDelim != '':
-			newListStr = newListStr.replace(customDelim, ',')
 
 		# Split on commas
 		return newListStr.split(',')
