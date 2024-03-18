@@ -25,7 +25,10 @@ class Calculator:
 	preprocessing with as few loops over the data as possible, doing as much work
 	as possible each iteration.
 	'''
+
+	# Capture groups: 1) Delims, 2) Formula (not used, is there for future)
 	CUSTOM_DELIM_PATTERN = r'^//(.*?)\n(.*?)'
+
 
 	def __init__(self, numListStr):
 		self.numList = self._parseNumListStr(numListStr)
