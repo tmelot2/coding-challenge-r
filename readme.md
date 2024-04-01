@@ -4,6 +4,12 @@ A command line calculator that supports add operations. Requires Python 3.
 
 Developed & tested with Python 3.11.7.
 
+## Requirements Background
+
+A coding challenge to write a basic command line calculator with a specific input format (see below).
+
+Requirements are incrementally modified to simulate real-world design changes. Each commit represents the changing design (plus cleanup & bug fixes).
+
 ## How to use
 
 Run with Python & provide an input string. Example:
